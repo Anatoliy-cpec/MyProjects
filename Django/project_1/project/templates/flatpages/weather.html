@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+{{ flatpage.title }}
+{% endblock title %}
+
+{% block content %}
+    <h1 style="text-align: center; font-family: 'Courier New', Courier, monospace;">{{ flatpage.content }}</h1>
+    <span style="text-align: center; color: blue; font-size: 25px;">-80</span> 
+    <h2 style="text-align: center;"> а может {{ flatpage.content }}</h2>
+    <span style="text-align: center; color: rgb(0, 238, 255); font-size: 25px;">-30</span> 
+    <h3>Никто не знает наверняка</h3>
+{% endblock content %}
+
