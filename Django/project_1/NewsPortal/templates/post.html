@@ -1,0 +1,21 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+    {{post.post_header}}
+{% endblock title %}
+
+{% block content %}
+    <div class="post-container">
+        <div class="post">
+            <h1>{{ post.post_header }}</h1>
+            <p class="post-data">Дата публикации: {{ post.creation_date|date:"d.m.y" }}</p>
+            <ul>
+                <li>Автор: {{post.author.user.username}}</li>
+                <li>Рейтинг статьи: {{post.rating}}</li>
+                <li>Рейтинг автора: {{post.author.rating}} </li>
+            </ul>
+            <p class="post-body">{{ post.post_text|censor }}</p>
+        </div>
+    </div>
+{% endblock content %}

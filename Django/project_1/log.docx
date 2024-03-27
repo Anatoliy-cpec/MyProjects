@@ -1,0 +1,53 @@
+>>> from news.models import *
+>>> user1 = User.objects.create_user('Oleg')
+>>> user2 = User.objects.create_user('Anton') 
+>>> author_oleg = Author.objects.create(user=user1) 
+>>> author_anton = Author.objects.create(user=user2) 
+>>> category_it = Category.objects.create(category='IT') 
+>>> category_sport = Category.objects.create(category='Sport')
+>>> category_animals = Category.objects.create(category='Animals') 
+>>> category_weather = Category.objects.create(category='Weather')
+>>> article1 = Post.objects.create(author=author_oleg, choise=article, post_header='Some article 1', post_text='Some article text, very long text') 
+>>> article1.category.set((category_it, category_sport))
+>>> article2 = Post.objects.create(author=author_oleg, choise=article, post_header='Some article 2', post_text='Some article 2 text, not so long as previous')
+>>> article2.category.set((category_weather, category_animals)) 
+>>> news1 = Post.objects.create(author=author_anton, choise=news, post_header='Some news 1', post_text='Some news 1 text, newest')
+>>> news1.category.set((category_animals, category_it))
+>>> comment1 = Comment.objects.create(post=article1, user=user1, comment_text='Positive comment')        
+>>> comment2 = Comment.objects.create(post=article2, user=user2, comment_text='Negative comment')        
+>>> comment3 = Comment.objects.create(post=news1, user=user1, comment_text='indefined')
+>>> comment4 = Comment.objects.create(post=news1, user=user2, comment_text='indefined') 
+>>> comment1.like()
+>>> comment2.like() 
+>>> comment2.like()
+>>> comment3.like() 
+>>> comment3.like()
+>>> comment3.like()
+>>> comment4.like() 
+>>> comment4.like()
+>>> comment4.like()
+>>> comment4.like()
+>>> article1.like()
+>>> article1.like()
+>>> article1.like()
+>>> article2.like() 
+>>> article2.like()
+>>> news1.like()
+>>> author_oleg.uppdate_rating()//22 = 15 + 4 + 4
+>>> author_anton.uppdate_rating()
+>>> bestAuthor = Author.objects.all().order_by('-rating')
+>>> bestAuthor[0].user.username, bestAuthor[0].rating 
+>>> bestPost = Post.objects.all().order_by('-rating')[0]
+>>> print(f'Best post info \n Data: {str(bestPost.creation_date)}, \n Author: {bestPost.author.user.username}, \n Rating: {bestPost.rating}, 
+    \n Header: {bestPost.post_header}, \n Post content preview: {bestPost.preview()}')
+>>>  bestPostComments = Comment.objects.filter(post=bestPost)
+>>> for i in bestPostComments: print(f'Comment: \n Date: {i.creation_date}, \n Username: {i.user.username}, 
+    \n Rating:  {i.rating}, \n Commentary text: {i.comment_text}')
+
+
+
+
+
+
+
+
