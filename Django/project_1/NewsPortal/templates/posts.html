@@ -10,7 +10,7 @@
     <div class="news-container">
         {% for post in posts %}
             <div class="news">
-             <h1><a href={{post.id}}>{{ post.post_header|censor}}</a></h1>
+             <h1><a href={{post.id}}>{{ post.post_header}}</a></h1>
                 <span style="font-size: 18px;">{{ post.creation_date|date:'M d Y'}}</span>
                 <p>{{ post.post_text|truncatewords:20|censor }}</p>
             </div>
