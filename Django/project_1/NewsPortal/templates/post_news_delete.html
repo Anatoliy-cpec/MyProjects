@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<h1>Удаление новости</h1>
+{% if post.choise == 'NE' %}
+<form action="" method="post" style="text-align: center;">
+    {% csrf_token %}
+    <p>Удаляем "{{ post.post_header }}"?</p>
+    <input type="submit" value="Delete" />
+</form>
+{% else %}
+    <h2>Это не новость!</h2>
+{% endif %}
+{% endblock content %}

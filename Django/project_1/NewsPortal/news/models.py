@@ -1,15 +1,9 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
-
-news = 'NE'
-article = 'AR'
-
-CHOICES =( 
-        (news, "Новость"), 
-        (article, "Статья"), 
-    ) 
 
 
 
@@ -17,6 +11,8 @@ class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default = 0)
 
+    def __str__(self) -> str:
+        return self.user.username
     
 
     def uppdate_rating(self):
@@ -40,11 +36,19 @@ class Author(models.Model):
 class Category(models.Model):
     category = models.CharField(max_length = 24, unique = True)
 
+    def __str__(self) -> str:
+        return self.category
+
 class Post(models.Model):
+
+    class PostType(models.TextChoices):
+
+        news = 'NE', _('Новость')
+        article = 'AR', _('Статья')
 
 
     author = models.ForeignKey(Author, on_delete = models.CASCADE)
-    choise = models.CharField(max_length = 2, choices=CHOICES, default = news)
+    choise = models.CharField(max_length = 2, choices=PostType, default = PostType.news)
     creation_date = models.DateTimeField(auto_now_add = True)
     post_header = models.CharField(max_length=64)
     post_text = models.TextField(default='Some text', max_length=512)
@@ -68,6 +72,9 @@ class Post(models.Model):
 
     def __str__(self):
         return f'Название: {self.post_header}, Автор: {self.author.user.username}, Рейтинг: {self.rating}'
+    
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

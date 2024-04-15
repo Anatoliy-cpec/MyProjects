@@ -9,13 +9,16 @@
     <div class="post-container">
         <div class="post">
             <h1>{{ post.post_header }}</h1>
-            <p class="post-data">Дата публикации: {{ post.creation_date|date:"d.m.y" }}</p>
-            <ul>
-                <li>Автор: {{post.author.user.username}}</li>
-                <li>Рейтинг статьи: {{post.rating}}</li>
-                <li>Рейтинг автора: {{post.author.rating}} </li>
-            </ul>
-            <p class="post-body">{{ post.post_text|censor }}</p>
+            <p>Дата публикации: {{ post.creation_date|date:"d.m.y" }}</p>
+            <hr style="margin-top: 5px; margin-bottom: 5px;">
+            <p>{{ post.post_text|censor }}</p>
+            {% if post.choise == 'AR' %}
+                <p><a href="{% url 'article_delete' pk=post.id%}">Удалить: </a></p>
+                <p><a href="{% url 'article_edit' pk=post.id%}">Изменить: </a></p>
+            {% elif post.choise == 'NE' %}
+                <p><a href="{% url 'news_delete' pk=post.id%}">Удалить: </a></p>
+                <p><a href="{% url 'news_edit' pk=post.id%}">Изменить: </a></p>
+            {% endif %}
         </div>
     </div>
 {% endblock content %}

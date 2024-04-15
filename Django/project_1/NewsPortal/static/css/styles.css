@@ -10,11 +10,22 @@ li {
 }
 
 
+
 * a {
   text-decoration: none;
+  padding: 5px;
   color: rgb(230, 218, 114);
 }
 
+* a:hover{
+    color: cornflowerblue;
+}
+
+.active{
+
+    border-bottom: 1px solid yellowgreen;
+
+}
 .container {
     width: 1280px;
 }
@@ -27,6 +38,38 @@ li {
     justify-content: center;
 }
 
+.news-form{
+    margin: 5px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: white;
+    box-shadow: 4px 4px 15px 1px; 
+
+}
+
+.news-form_links{
+    margin: 5px;
+    padding: 5px;
+    background-color: black;
+    color: white;
+    width: 500px;
+    border: 1px solid black;
+    align-items: center;
+    text-align: center;
+}
+
+.news-search{
+    margin: 5px;
+    padding: 5px;
+    color: white;
+    background-color: black;
+    text-align: center;
+    width: 500px;
+    border: 1px solid black;
+}
+
 header.wrapper{
     background-color: black;
 }
@@ -37,10 +80,8 @@ header nav{
     height: auto;
     align-items: center;
     justify-content: space-between;
-    margin-top: 10px;
     margin-left: 50px;
     margin-right: 50px;
-    margin-bottom: 10px;
 }
 
 header ul{
@@ -56,10 +97,6 @@ header li{
     font-size: 14px;
 }
 
-header a:hover{
-    color: cornflowerblue;
-}
-
 .content{
     display: flex;
     align-items: center;
@@ -68,10 +105,10 @@ header a:hover{
 
 .container-content{
     width: 100%;
-    height: auto;
+    min-height: 1080px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items:center;
+    
     flex-direction: column;
 }
 
@@ -95,24 +132,31 @@ header a:hover{
     justify-content: center;
 }
 
-.news{
+.posts{
     display: flex; 
+    background-color: #fff;
     flex-direction: column; 
     padding: 5px; 
-    margin: 20px 5px 5px 5px; 
+    margin: 20px 5px 25px 5px; 
     width: 45%; 
+    height: 150px;
     align-items: center; 
     box-shadow: 4px 4px 15px 1px; 
 }
 
-.news h1 {
+.long{
+    width: 100%; 
+}
+
+.posts-header {
     font-size: 22px; 
+    margin-bottom: 15px;
     width: 100%; 
     text-align: center; 
     background-color: black;
 }
 
-.news-container{
+.posts-container{
     display: flex;
     padding-top: 50px;
     width: 1200px;
@@ -165,10 +209,30 @@ header a:hover{
 .post-container{
     display: flex;
     padding-top: 50px;
-    width: auto;
+    width: 100% !important;
     height: auto;
     justify-content: center;
     align-items: center;
+}
+
+
+
+
+.pagination{
+    padding: 5px 0px 5px 0px;
+    text-align: center;
+    position: sticky;
+    bottom: 0%;
+    width: 100%;
+    background-color: black;
+}
+
+.pagination * { 
+    font-size: 20px;
+}
+
+.pagination span {
+    color: white;
 }
 
 

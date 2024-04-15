@@ -1,0 +1,23 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+
+    {% if post.choise %}
+    <h1>Изменить статью</h1>
+    {% else %}
+    <h1>Создать статью</h1>
+    {% endif %}
+    
+{% endblock title %}
+
+{% block content %}
+{% if post.choise == 'AR' or post.choise is None %}
+<form action="" method="post" style="text-align: center;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save" />
+</form>
+{% else %}
+    <h2>Это не статья!</h2>
+{% endif %}
+{% endblock content %}

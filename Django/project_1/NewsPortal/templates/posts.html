@@ -1,18 +1,37 @@
 {% extends 'flatpages/default.html' %} 
 {% load custom_filters %}
+{% load custom_tags %}
  
 {% block title %}
-    <h1>Все посты: {{posts|length}}</h1>
+    <h1>Все посты: {{posts.count}}</h1>
 {% endblock title %}
  
 {% block content %}
+
+    <div class="news-form">
+        <div class="news-form_links">
+            <span>Добавить: </span>
+            <a href="{% url 'article_create' %}">статью</a>
+            <a href="{% url 'news_create' %}">новость</a>
+        </div>
+        <form class="news-search" action="" method="get" >
+            {{ filterset.form.non_field_errors }}
+            {{ filterset.form.post_header__icontains.errors }}
+            {{ filterset.form.post_header.label}}
+            {{ filterset.form.post_header}}
+    
+            <input type="submit" value="Найти" />
+        </form>
+    </div>
+
     {% if posts %}
-    <div class="news-container">
+
+    <div class="posts-container">
         {% for post in posts %}
-            <div class="news">
-             <h1><a href={{post.id}}>{{ post.post_header}}</a></h1>
-                <span style="font-size: 18px;">{{ post.creation_date|date:'M d Y'}}</span>
-                <p>{{ post.post_text|truncatewords:20|censor }}</p>
+            <div {% if forloop.last and not posts.count|divisibleby:2 %} class="posts long"{% else %} class="posts" {% endif %}>
+             <h1 class="posts-header"><a href={{post.id}}>{{ post.post_header}}</a></h1>
+                <span style="font-size: 18px;">{{ post.creation_date|date:'M d Y'}} {{post.choise}}</span>
+                <p>{{ post.post_text|truncatewords:30|censor }}</p>
             </div>
         {% endfor %}
     </div>
