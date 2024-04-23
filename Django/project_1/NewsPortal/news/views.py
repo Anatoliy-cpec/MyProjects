@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView,
@@ -51,7 +52,8 @@ class PostDetail(DetailView):
 
 
 
-class PostArticleCreate(CreateView):
+class PostArticleCreate(LoginRequiredMixin, CreateView):
+    
     form_class = PostArticleForm
     model = Post
     template_name = 'post_article_edit.html'
@@ -61,12 +63,14 @@ class PostArticleCreate(CreateView):
         post.choise = 'AR'
         return super().form_valid(form)
     
-class PostArticleUpdate(UpdateView):
+class PostArticleUpdate(LoginRequiredMixin, UpdateView):
+    
     form_class = PostArticleForm
     model = Post
     template_name = 'post_article_edit.html'
 
-class PostArticleDelete(DeleteView):
+class PostArticleDelete(LoginRequiredMixin, DeleteView):
+    
     model = Post
     template_name = 'post_article_delete.html'
     success_url = reverse_lazy('posts')
@@ -74,7 +78,8 @@ class PostArticleDelete(DeleteView):
 
 
     
-class PostNewsCreate(CreateView):
+class PostNewsCreate(LoginRequiredMixin, CreateView):
+    
     form_class = PostNewsForm
     model = Post
     template_name = 'post_news_edit.html'
@@ -84,12 +89,14 @@ class PostNewsCreate(CreateView):
         post.choise = 'NE'
         return super().form_valid(form)
 
-class PostNewsUpdate(UpdateView):
+class PostNewsUpdate(LoginRequiredMixin, UpdateView):
+    
     form_class = PostNewsForm
     model = Post
     template_name = 'post_news_edit.html'
 
-class PostNewsDelete(DeleteView):
+class PostNewsDelete(LoginRequiredMixin, DeleteView):
+    
     model = Post
     template_name = 'post_news_delete.html'
     success_url = reverse_lazy('posts')
@@ -98,17 +105,17 @@ class PostNewsDelete(DeleteView):
 
 
 
-class PostCreate(CreateView):
+class PostCreate(LoginRequiredMixin, CreateView):
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
 
-class PostUpdate(UpdateView):
+class PostUpdate(LoginRequiredMixin, UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
 
-class PostDelete(DeleteView):
+class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('posts')
