@@ -9,11 +9,13 @@
 {% block content %}
 
     <div class="news-form">
+        {% if perms.news.add_post and perms.news.create_post %}
         <div class="news-form_links">
             <span>Добавить: </span>
             <a href="{% url 'article_create' %}">статью</a>
             <a href="{% url 'news_create' %}">новость</a>
         </div>
+        {% endif %}
         <form class="news-search" action="" method="get" >
             {{ filterset.form.non_field_errors }}
             {{ filterset.form.post_header__icontains.errors }}

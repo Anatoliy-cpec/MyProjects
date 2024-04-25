@@ -10,14 +10,22 @@
         <div class="post">
             <h1>{{ post.post_header }}</h1>
             <p>Дата публикации: {{ post.creation_date|date:"d.m.y" }}</p>
-            <hr style="margin-top: 5px; margin-bottom: 5px;">
+            <hr style="width: 100%; margin-top: 25px; margin-bottom: 25px;">
             <p>{{ post.post_text|censor }}</p>
             {% if post.choise == 'AR' %}
-                <p><a href="{% url 'article_delete' pk=post.id%}">Удалить: </a></p>
-                <p><a href="{% url 'article_edit' pk=post.id%}">Изменить: </a></p>
+                {% if perms.news.add_post and perms.news.create_post %}
+                <div class="post-edit">
+                    <p class="post-edit_delete"><a href="{% url 'article_delete' pk=post.id%}">Удалить </a></p>
+                    <p class="post-edit_edit"><a href="{% url 'article_edit' pk=post.id%}">Изменить </a></p>
+                </div>
+                {% endif %}
             {% elif post.choise == 'NE' %}
-                <p><a href="{% url 'news_delete' pk=post.id%}">Удалить: </a></p>
-                <p><a href="{% url 'news_edit' pk=post.id%}">Изменить: </a></p>
+                {% if perms.news.add_post and perms.news.create_post %}
+                <div class="post-edit">
+                    <p class="post-edit_delete"><a href="{% url 'news_delete' pk=post.id%}">Удалить: </a></p>
+                    <p class="post-edit_edit"><a href="{% url 'news_edit' pk=post.id%}">Изменить: </a></p>
+                </div>
+                {% endif %}
             {% endif %}
         </div>
     </div>

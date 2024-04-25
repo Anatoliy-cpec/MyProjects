@@ -1,3 +1,8 @@
+<<<<<<< Updated upstream
+=======
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+>>>>>>> Stashed changes
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView,
@@ -51,7 +56,12 @@ class PostDetail(DetailView):
 
 
 
+<<<<<<< Updated upstream
 class PostArticleCreate(CreateView):
+=======
+class PostArticleCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
+>>>>>>> Stashed changes
     form_class = PostArticleForm
     model = Post
     template_name = 'post_article_edit.html'
@@ -61,12 +71,22 @@ class PostArticleCreate(CreateView):
         post.choise = 'AR'
         return super().form_valid(form)
     
+<<<<<<< Updated upstream
 class PostArticleUpdate(UpdateView):
+=======
+class PostArticleUpdate(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
+>>>>>>> Stashed changes
     form_class = PostArticleForm
     model = Post
     template_name = 'post_article_edit.html'
 
+<<<<<<< Updated upstream
 class PostArticleDelete(DeleteView):
+=======
+class PostArticleDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+    permission_required = ('news.delete_post',)
+>>>>>>> Stashed changes
     model = Post
     template_name = 'post_article_delete.html'
     success_url = reverse_lazy('posts')
@@ -74,7 +94,12 @@ class PostArticleDelete(DeleteView):
 
 
     
+<<<<<<< Updated upstream
 class PostNewsCreate(CreateView):
+=======
+class PostNewsCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
+>>>>>>> Stashed changes
     form_class = PostNewsForm
     model = Post
     template_name = 'post_news_edit.html'
@@ -84,12 +109,22 @@ class PostNewsCreate(CreateView):
         post.choise = 'NE'
         return super().form_valid(form)
 
+<<<<<<< Updated upstream
 class PostNewsUpdate(UpdateView):
+=======
+class PostNewsUpdate(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
+>>>>>>> Stashed changes
     form_class = PostNewsForm
     model = Post
     template_name = 'post_news_edit.html'
 
+<<<<<<< Updated upstream
 class PostNewsDelete(DeleteView):
+=======
+class PostNewsDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+    permission_required = ('news.delete_post',)
+>>>>>>> Stashed changes
     model = Post
     template_name = 'post_news_delete.html'
     success_url = reverse_lazy('posts')
@@ -98,17 +133,32 @@ class PostNewsDelete(DeleteView):
 
 
 
+<<<<<<< Updated upstream
 class PostCreate(CreateView):
+=======
+class PostCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
+>>>>>>> Stashed changes
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
 
+<<<<<<< Updated upstream
 class PostUpdate(UpdateView):
+=======
+class PostUpdate(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
+>>>>>>> Stashed changes
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
 
+<<<<<<< Updated upstream
 class PostDelete(DeleteView):
+=======
+class PostDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+    permission_required = ('news.delete_post',)
+>>>>>>> Stashed changes
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('posts')

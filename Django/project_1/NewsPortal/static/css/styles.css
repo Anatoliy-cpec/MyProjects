@@ -21,6 +21,18 @@ li {
     color: cornflowerblue;
 }
 
+.account {
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.account a {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+}
+
 .active{
 
     border-bottom: 1px solid yellowgreen;
@@ -166,11 +178,33 @@ header li{
 }
 
 .post{
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
     width: 100%; 
     box-shadow: 4px 4px 37px 1px; 
     padding: 15px;
     text-align: center;
     align-items: center;
+}
+
+.post-edit{
+
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+    margin-top: 15px;
+    width: 300px;
+}
+
+.post-edit_delete {
+    background-color: black;
+    padding: 5px;
+}
+
+.post-edit_edit {
+    background-color: black;
+    padding: 5px;
 }
 
 .post h1 {
