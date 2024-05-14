@@ -14,11 +14,11 @@ li {
 * a {
   text-decoration: none;
   padding: 5px;
-  color: rgb(230, 218, 114);
+  color: #FFE873;
 }
 
 * a:hover{
-    color: cornflowerblue;
+    color: #4B8BBE;
 }
 
 .account {
@@ -35,7 +35,7 @@ li {
 
 .active{
 
-    border-bottom: 1px solid yellowgreen;
+    border-bottom: 1px solid #FFD43B;
 
 }
 .container {

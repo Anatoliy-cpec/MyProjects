@@ -40,6 +40,10 @@ class Category(models.Model):
     def __str__(self) -> str:
         return self.category
 
+class Subscribers(models.Model):
+    category = models.ForeignKey(Category, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+
 class Post(models.Model):
 
     class PostType(models.TextChoices):

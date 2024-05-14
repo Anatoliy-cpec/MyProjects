@@ -33,7 +33,9 @@
             <div {% if forloop.last and not posts.count|divisibleby:2 %} class="posts long"{% else %} class="posts" {% endif %}>
              <h1 class="posts-header"><a href={{post.id}}>{{ post.post_header}}</a></h1>
                 <span style="font-size: 18px;">{{ post.creation_date|date:'M d Y'}} {{post.choise}}</span>
-                <p>{{ post.post_text|truncatewords:30|censor }}</p>
+                <p style="word-break: break-all;">{{ post.post_text|truncatewords:30|censor }}</p>
+                
+                
             </div>
         {% endfor %}
     </div>

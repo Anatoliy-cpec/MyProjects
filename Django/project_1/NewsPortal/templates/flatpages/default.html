@@ -34,8 +34,9 @@
                     {% if request.user.is_authenticated %}
                         <a href="#">{{ request.user.username }}</a>
                         <img src="{% static 'images/user-profile_login.png' %}" alt="My image" width="25" height="25"/>
+                        <a href="http://127.0.0.1:8000/accounts/logout/">logout</a>
                     {% else %}
-                        <a href="http://127.0.0.1:8000/accounts/login/">log in</a>
+                        <a href="http://127.0.0.1:8000/accounts/login/">login</a>
                         <img src="{% static 'images/user-profile_unlogin.png' %}" alt="img" width="25px" height="25px">
                     {% endif %}
                 </div>

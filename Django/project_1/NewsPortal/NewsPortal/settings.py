@@ -45,7 +45,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
     'news',
+    'subscriptions',
     'django_filters',
+    'django_apscheduler',
+    
     
 ]
 
@@ -131,7 +134,32 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+
+ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignupForm'}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "tolikk.win32@gmail.com"
+EMAIL_HOST_PASSWORD = "pvgqnwlunkvuoaqj"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = "tolikk.win32@gmail.com"
+
+SERVER_EMAIL = "tolikk.win32@gmail.com"
+MANAGERS = (
+    ('Oleg', 'ivan@yandex.ru'),
+    ('Anton', 'petr@yandex.ru'),
+)
 
 
 # Static files (CSS, JavaScript, Images)
@@ -139,12 +167,21 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
+
 LOGIN_REDIRECT_URL = "/posts"
+
+LOGOUT_REDIRECT_URL = "/posts"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+APPSHEDULER_DATETIME_FORMAT = 'N j, Y, f:s a'
+APPSHEDULER_RUN_NOW_TIMEOUT = 25
 
 STATICFILES_DIRS = [
     BASE_DIR / "static"
