@@ -54,6 +54,8 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
+SITE_URL = 'http://127.0.0.1:8000'
+
 
 
 MIDDLEWARE = [
@@ -148,14 +150,14 @@ ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignupForm'}
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "tolikk.win32@gmail.com"
-EMAIL_HOST_PASSWORD = "pvgqnwlunkvuoaqj"
+EMAIL_HOST_USER = "your@mail.com"
+EMAIL_HOST_PASSWORD = "*****************"
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-DEFAULT_FROM_EMAIL = "tolikk.win32@gmail.com"
+DEFAULT_FROM_EMAIL = "your@mail.com"
 
-SERVER_EMAIL = "tolikk.win32@gmail.com"
+SERVER_EMAIL = "your@mail.com"
 MANAGERS = (
     ('Oleg', 'ivan@yandex.ru'),
     ('Anton', 'petr@yandex.ru'),
@@ -182,6 +184,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 APPSHEDULER_DATETIME_FORMAT = 'N j, Y, f:s a'
 APPSHEDULER_RUN_NOW_TIMEOUT = 25
+
+CELERY_BROKER_URL = 'redis://default:7HiwjduIu070R3Y7NFTP2Z6Xb6HwJjeu@redis-10479.c90.us-east-1-3.ec2.redns.redis-cloud.com:10479'
+CELERY_RESULT_BACKEND = 'redis://default:7HiwjduIu070R3Y7NFTP2Z6Xb6HwJjeu@redis-10479.c90.us-east-1-3.ec2.redns.redis-cloud.com:10479'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static"
