@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+import logging
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,7 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9fi^8zt$a3y=wq+xzv)x$1z1n(3@j+ts6%5=&e4acw_9tvr)k!'
+SECRET_KEY = (
+    'django-insecure-9fi^8zt$a3y=wq+xzv)x$1z1n(3@j+ts6%5=&e4acw_9tvr)k!'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -57,7 +60,6 @@ SITE_ID = 1
 SITE_URL = 'http://127.0.0.1:8000'
 
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -68,6 +70,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware', \\ кэш всей страницы
+    # 'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'NewsPortal.urls'
@@ -150,14 +155,14 @@ ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignupForm'}
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "your@mail.com"
-EMAIL_HOST_PASSWORD = "*****************"
+EMAIL_HOST_USER = "tolikk.win32@gmail.com"
+EMAIL_HOST_PASSWORD = "pvgqnwlunkvuoaqj"
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-DEFAULT_FROM_EMAIL = "your@mail.com"
+DEFAULT_FROM_EMAIL = "tolikk.win32@gmail.com"
 
-SERVER_EMAIL = "your@mail.com"
+SERVER_EMAIL = "tolikk.win32@gmail.com"
 MANAGERS = (
     ('Oleg', 'ivan@yandex.ru'),
     ('Anton', 'petr@yandex.ru'),
@@ -169,8 +174,6 @@ MANAGERS = (
 
 STATIC_URL = 'static/'
 
-
-
 LOGIN_REDIRECT_URL = "/posts"
 
 LOGOUT_REDIRECT_URL = "/posts"
@@ -180,9 +183,8 @@ LOGOUT_REDIRECT_URL = "/posts"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
 APPSHEDULER_DATETIME_FORMAT = 'N j, Y, f:s a'
+
 APPSHEDULER_RUN_NOW_TIMEOUT = 25
 
 CELERY_BROKER_URL = 'redis://default:7HiwjduIu070R3Y7NFTP2Z6Xb6HwJjeu@redis-10479.c90.us-east-1-3.ec2.redns.redis-cloud.com:10479'
@@ -191,10 +193,141 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
+CACHES = {
+    'default': {
+        # 'TIMEOUT': 60, # добавляем стандартное время ожидания в минуту (по умолчанию это 5 минут — 300 секунд)
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files'),  # Указываем, куда
+        # будем сохранять кэшируемые файлы! Не забываем создать папку
+        # cache_files внутри папки с manage.py!
+    }
+}
+
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'style': '{',
+    'formatters': {
+        'console_general_formatter': {
+            'format': '%(asctime)s %(levelname)s %(message)s',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+        'console_warning_formatter': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+        'console_error_or_critical_formatter': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s %(exc_info)s',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+        'log_general_formatter': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+        'log_error_or_critical_formatter': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s %(exc_info)s',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+        'log_security_formatter': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        },
+        'mail_formatter': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s',
+            'datefmt': '%d.%m.%Y %H-%M-%S',
+        }
+    },
 
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
 
+    'handlers': {
+        # 'class': 'logging.FileHandler', класс для логов
+        # 'class': 'logging.StreamHandler', класс для консоли
+        'console_general_handler': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_general_formatter',
+            'filters': ['require_debug_true'], 
+        },
+        'console_warning_handler': {
+            'level': 'WARNING',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_warning_formatter',
+            'filters': ['require_debug_true'],
+        },
+        'console_error_critical_handler': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_error_or_critical_formatter',
+            'filters': ['require_debug_true'],
+        },
+        'log_general_handler': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'formatter': 'log_general_formatter',
+            'filename': os.path.join('general.log'),
+            'filters': ['require_debug_false'],
+        },
+        'log_error_critical_handler': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'formatter': 'log_error_or_critical_formatter',
+            'filename': os.path.join('errors.log'),
+        },
+        'log_security_handler': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'formatter': 'log_security_formatter',
+            'filename': os.path.join('security.log')
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'filters': ['require_debug_false'],
+        }
+    },
 
+    'loggers': {
+        'django': {
+            'handlers': ['console_general_handler', 'console_warning_handler','console_error_critical_handler','log_general_handler',],
+            'level': 'DEBUG',
+        },
+
+        'django.request': {
+            'handlers': ['log_error_critical_handler','mail_admins',],
+            'level': 'ERROR',
+        },
+
+        'django.server': {
+            'handlers': ['log_error_critical_handler','mail_admins',],
+            'level': 'ERROR',
+        },
+
+        'django.template': {
+            'handlers': ['log_error_critical_handler',],
+            'level': 'ERROR',
+        },
+
+        'django.db.backends': {
+            'handlers': ['log_error_critical_handler'],
+            'level': 'ERROR',
+        },
+
+        'django.security': {
+            'handlers': ['log_security_handler',],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    }
+}

@@ -7,13 +7,16 @@
     {% load custom_filters %}
     {% load custom_tags %}
     {% load static %}
+    {% load cache %}
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 </head>
 <body>
     <header class="wrapper">
         <div class="container">
+            
             <nav class="header_nav"> 
                 <a href="/home" style="min-width: 15px; min-height: 15px; text-align: center;"><img src="https://pythonz.net/media/img/events/thumbs/180x236/db5c67d4-1755-461e-951f-85c82f8d4607.jpeg" alt="Img" width="50px" height="50px"></a>
+                
                 <ul>
                     <li>
                         <a href="/about" {% if request.get_full_path == '/about/' %}class="active"{% endif %}>About</a>
@@ -30,6 +33,7 @@
                         <a href="{% url 'search' %}"{% if url_search in request.get_full_path %}class="active"{% endif %}>Search</a>
                     </li>
                 </ul>
+                
                 <div class="account">
                     {% if request.user.is_authenticated %}
                         <a href="#">{{ request.user.username }}</a>
@@ -41,6 +45,7 @@
                     {% endif %}
                 </div>
             </nav>
+            
         </div>
     </header>
     <div class="content wrapper">

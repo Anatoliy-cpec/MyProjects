@@ -14,4 +14,4 @@ class NewsConfig(AppConfig):
 r = redis.Redis(
   host='********************************',
   port=10479,
-  password='********************************')
+  password='********************')

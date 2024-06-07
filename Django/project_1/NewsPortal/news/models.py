@@ -4,17 +4,15 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-
+from django.core.cache import cache  # импортируем наш кэш
 
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    rating = models.IntegerField(default = 0)
-
+    rating = models.IntegerField(default=0)
 
     def __str__(self) -> str:
         return self.user.username
-    
 
     def uppdate_rating(self):
 
@@ -22,27 +20,35 @@ class Author(models.Model):
             __posts_rating = Post.objects.filter(author=self).values('rating')
             self.rating += sum(item['rating'] for item in __posts_rating)*3
             self.save()
-        
+
         if Comment.objects.filter(user=self.user).exists():
-            __comments_rating = Comment.objects.filter(user=self.user).values('rating')
+            __comments_rating = (
+                Comment.objects.filter(user=self.user).values('rating')
+                )
             self.rating += sum(item['rating'] for item in __comments_rating)
             self.save()
 
         if Comment.objects.filter(post__author=self).exists():
-            __postComments_rating = Comment.objects.filter(post__author=self).values('rating')
-            self.rating += sum(item['rating'] for item in __postComments_rating)
+            __postComments_rating = (
+                Comment.objects.filter(post__author=self).values('rating')
+                )
+            self.rating += sum(
+                item['rating'] for item in __postComments_rating
+                )
             self.save()
-                    
+
 
 class Category(models.Model):
-    category = models.CharField(max_length = 24, unique = True)
+    category = models.CharField(max_length=24, unique=True)
 
     def __str__(self) -> str:
         return self.category
 
+
 class Subscribers(models.Model):
-    category = models.ForeignKey(Category, on_delete = models.CASCADE)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
 class Post(models.Model):
 
@@ -51,15 +57,24 @@ class Post(models.Model):
         news = 'NE', _('Новость')
         article = 'AR', _('Статья')
 
-
-    author = models.ForeignKey(Author, on_delete = models.CASCADE)
-    choise = models.CharField(max_length = 2, choices=PostType, default = PostType.news)
-    creation_date = models.DateTimeField(auto_now_add = True)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    choise = models.CharField(
+        max_length=2,
+        choices=PostType,
+        default=PostType.news
+    )
+    creation_date = models.DateTimeField(auto_now_add=True)
     post_header = models.CharField(max_length=64)
     post_text = models.TextField(default='Some text', max_length=512)
     rating = models.IntegerField(default=0)
 
-    category = models.ManyToManyField(Category, through = 'PostCategory')
+    category = models.ManyToManyField(Category, through='PostCategory')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # сначала вызываем метод родителя, чтобы объект сохранился
+        cache.delete(f'post-{self.pk}')
+        # затем удаляем его из кэша, чтобы сбросить его
 
     def like(self):
         self.rating += 1
@@ -76,10 +91,11 @@ class Post(models.Model):
             return f"{str(self.post_text)}"
 
     def __str__(self):
-        return f'Название: {self.post_header}, Автор: {self.author.user.username}, Рейтинг: {self.rating}'
-    
+        return (f'Название: {self.post_header}, Автор: {self.author.user.username}, Рейтинг: {self.rating}')
+
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])
+
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -90,7 +106,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment_text = models.CharField(max_length=64)
-    creation_date = models.DateTimeField(auto_now_add = True)
+    creation_date = models.DateTimeField(auto_now_add=True)
     rating = models.IntegerField(default=0)
 
     def like(self):
@@ -100,4 +116,3 @@ class Comment(models.Model):
     def dislike(self):
         self.rating -= 1
         self.save()
-
