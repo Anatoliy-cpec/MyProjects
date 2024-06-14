@@ -1,0 +1,27 @@
+{% extends 'default.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans 'Subscriptions' %}
+{% endblock title %}
+
+{% block content %}
+    {% for category in categories  %}
+        <p>
+            {{ category }}
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="category_id" value="{{ category.id }}" />
+
+                {% if category.user_subscribed %}
+                    <button disabled>{% trans 'Subscribe' %}</button>
+                    <button name="action" value="unsubscribe">{% trans 'Describe' %}</button>
+                {% else %}
+                    <button name="action" value="subscribe">{% trans 'Subscribe' %}</button>
+                    <button disabled>{% trans 'Describe' %}</button>
+                {% endif %}
+            </form>
+            
+        </p>
+    {% endfor %}
+{% endblock content %}

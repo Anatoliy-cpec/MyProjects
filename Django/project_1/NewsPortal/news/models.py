@@ -2,7 +2,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy, gettext_lazy
+from django.utils.translation import gettext as _
 
 
 
@@ -43,9 +44,10 @@ class Post(models.Model):
 
     class PostType(models.TextChoices):
 
-        news = 'NE', _('Новость')
-        article = 'AR', _('Статья')
+        news = 'NE', gettext_lazy('News')
+        article = 'AR', gettext_lazy('Article')
 
+<<<<<<< Updated upstream
 
     author = models.ForeignKey(Author, on_delete = models.CASCADE)
     choise = models.CharField(max_length = 2, choices=PostType, default = PostType.news)
@@ -55,6 +57,26 @@ class Post(models.Model):
     rating = models.IntegerField(default=0)
 
     category = models.ManyToManyField(Category, through = 'PostCategory')
+=======
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    choise = models.CharField(
+        max_length=2,
+        choices=PostType,
+        default=PostType.news
+    )
+    creation_date = models.DateTimeField(auto_now_add=True, verbose_name=pgettext_lazy('Creation date', 'Date'))
+    post_header = models.CharField(max_length=64, verbose_name=pgettext_lazy('Header', 'Post header'), help_text=_('Post header place'))
+    post_text = models.TextField(default='Some text', max_length=512)
+    rating = models.IntegerField(default=0)
+    
+    category = models.ManyToManyField(Category, through='PostCategory', verbose_name=pgettext_lazy('Category', 'Post category'))
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # сначала вызываем метод родителя, чтобы объект сохранился
+        cache.delete(f'post-{self.pk}')
+        # затем удаляем его из кэша, чтобы сбросить его
+>>>>>>> Stashed changes
 
     def like(self):
         self.rating += 1
@@ -71,8 +93,13 @@ class Post(models.Model):
             return f"{str(self.post_text)}"
 
     def __str__(self):
+<<<<<<< Updated upstream
         return f'Название: {self.post_header}, Автор: {self.author.user.username}, Рейтинг: {self.rating}'
     
+=======
+        return (f'Name: {self.post_header}, Author: {self.author.user.username}, Rating: {self.rating}')
+
+>>>>>>> Stashed changes
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])
 

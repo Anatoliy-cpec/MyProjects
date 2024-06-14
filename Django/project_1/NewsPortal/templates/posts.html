@@ -1,27 +1,33 @@
-{% extends 'flatpages/default.html' %} 
+{% extends 'default.html' %} 
 {% load custom_filters %}
 {% load custom_tags %}
+{% load i18n %}
+{% load tz %}
  
 {% block title %}
-    <h1>Все посты: {{posts.count}}</h1>
+    <h1>{% trans 'Posts:' %}{{posts.count}}</h1>
+    {% for category in categories %}
+        <span>{{category}}</span>
+    {% endfor %}
+    
 {% endblock title %}
  
 {% block content %}
 
     <div class="news-form">
         <div class="news-form_links">
-            <span>Добавить: </span>
-            <a href="{% url 'article_create' %}">статью</a>
-            <a href="{% url 'news_create' %}">новость</a>
+            <span>{% trans 'Add' %}: </span>
+            <a href="{% url 'article_create' %}">{% trans 'article' %}</a>
+            <a href="{% url 'news_create' %}">{% trans 'news' %}</a>
         </div>
         <form class="news-search" action="" method="get" >
+
             {{ filterset.form.non_field_errors }}
             {{ filterset.form.post_header__icontains.errors }}
             {{ filterset.form.post_header.label}}
             {{ filterset.form.post_header}}
     
-            <input type="submit" value="Найти" />
-        </form>
+            <input type="submit" value="{% trans 'Find' %}"/>
     </div>
 
     {% if posts %}
@@ -31,7 +37,11 @@
             <div {% if forloop.last and not posts.count|divisibleby:2 %} class="posts long"{% else %} class="posts" {% endif %}>
              <h1 class="posts-header"><a href={{post.id}}>{{ post.post_header}}</a></h1>
                 <span style="font-size: 18px;">{{ post.creation_date|date:'M d Y'}} {{post.choise}}</span>
+<<<<<<< Updated upstream
                 <p>{{ post.post_text|truncatewords:30|censor }}</p>
+=======
+                <p style="word-break: break-all;">{{ post.post_text|truncatewords:30|censor }}</p>
+>>>>>>> Stashed changes
             </div>
         {% endfor %}
     </div>

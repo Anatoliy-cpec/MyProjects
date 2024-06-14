@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,14 +40,26 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django_filters',
     'django.contrib.flatpages',
+    'django_apscheduler',
 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
+<<<<<<< Updated upstream
     'news',
     'django_filters',
+=======
+
+    'subscriptions',
+    'news',
+    
+
+    
+    
+>>>>>>> Stashed changes
     
 ]
 
@@ -56,6 +70,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -63,6 +78,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+<<<<<<< Updated upstream
+=======
+    'django.middleware.locale.LocaleMiddleware',
+    'NewsPortal.middlewraes.TimezoneMiddleware',
+>>>>>>> Stashed changes
 ]
 
 ROOT_URLCONF = 'NewsPortal.urls'
@@ -78,6 +98,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
+
             ],
         },
     },
@@ -125,13 +146,61 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
+
+
 USE_I18N = True
 
+<<<<<<< Updated upstream
 USE_TZ = True
+=======
+LANGUAGE_CODE = 'en'
+
+
+
+LANGUAGES = [
+    ('en-us', 'English'),
+    ('ru', 'Русский')
+]
+
+
+
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
+
+
+
+USE_TZ = True
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+
+ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignupForm'}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "tolikk.win32@gmail.com"
+EMAIL_HOST_PASSWORD = "pvgqnwlunkvuoaqj"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = "tolikk.win32@gmail.com"
+
+SERVER_EMAIL = "tolikk.win32@gmail.com"
+MANAGERS = (
+    ('Oleg', 'ivan@yandex.ru'),
+    ('Anton', 'petr@yandex.ru'),
+)
+>>>>>>> Stashed changes
 
 
 # Static files (CSS, JavaScript, Images)
@@ -166,5 +235,97 @@ SOCIALACCOUNT_PROVIDERS = {
             'secret': '5ae34949fb9a471d897623ed6e2e5593',
             'key': ''
         }
+<<<<<<< Updated upstream
+=======
+    },
+
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+
+    'handlers': {
+        # 'class': 'logging.FileHandler', класс для логов
+        # 'class': 'logging.StreamHandler', класс для консоли
+        'console_general_handler': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_general_formatter',
+            'filters': ['require_debug_true'], 
+        },
+        'console_warning_handler': {
+            'level': 'WARNING',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_warning_formatter',
+            'filters': ['require_debug_true'],
+        },
+        'console_error_critical_handler': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_error_or_critical_formatter',
+            'filters': ['require_debug_true'],
+        },
+        'log_general_handler': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'formatter': 'log_general_formatter',
+            'filename': os.path.join('general.log'),
+            'filters': ['require_debug_false'],
+        },
+        'log_error_critical_handler': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'formatter': 'log_error_or_critical_formatter',
+            'filename': os.path.join('errors.log'),
+        },
+        'log_security_handler': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'formatter': 'log_security_formatter',
+            'filename': os.path.join('security.log')
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'filters': ['require_debug_false'],
+        }
+    },
+
+    'loggers': {
+        'django': {
+            'handlers': ['console_general_handler', 'console_warning_handler','console_error_critical_handler','log_general_handler',],
+            'level': 'INFO',
+        },
+
+        'django.request': {
+            'handlers': ['log_error_critical_handler','mail_admins',],
+            'level': 'ERROR',
+        },
+
+        'django.server': {
+            'handlers': ['log_error_critical_handler','mail_admins',],
+            'level': 'ERROR',
+        },
+
+        'django.template': {
+            'handlers': ['log_error_critical_handler',],
+            'level': 'ERROR',
+        },
+
+        'django.db.backends': {
+            'handlers': ['log_error_critical_handler'],
+            'level': 'ERROR',
+        },
+
+        'django.security': {
+            'handlers': ['log_security_handler',],
+            'level': 'INFO',
+            'propagate': False,
+        },
+>>>>>>> Stashed changes
     }
 }

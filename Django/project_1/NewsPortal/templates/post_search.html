@@ -1,45 +1,19 @@
-{% extends 'flatpages/default.html' %} 
+{% extends 'default.html' %} 
 {% load custom_filters %}
 {% load custom_tags %}
+{% load i18n %}
  
 {% block title %}
-    <h1>Найти:</h1>
+    <h1>{% trans 'Find:' %}</h1>
 {% endblock title %}
  
 {% block content %}
 <form method="get" action="{% url 'posts' %}">
+
     {{ filterset.form.non_field_errors }}
-
     {{ filterset.form.post_header__icontains.errors }}
+    {{ filterset.form.as_p}}
 
-    {{ filterset.form.as_p }}
-
-    <!-- <label for="{{ filterset.form.post_header__icontains.id_for_label }}">Заголовок</label>
-    <input
-        id="{{ filterset.form.post_header__icontains.id }}"
-        name="{{ filterset.form.post_header__icontains.name }}"
-        value="{{ filterset.form.post_header__icontains.value }}"
-    >
-
-    <label for="{{ filterset.form.category__category__icontains.id_for_label }}">Категория</label>
-    <input
-        id="{{ filterset.form.category__category__icontains.id }}"
-        name="{{ filterset.form.category__category__icontains.name }}"
-        value="{{ filterset.form.category__category__icontains.value }}"
-    >
-
-    <label for="{{ filterset.form.creation_date__date__gt.id_for_label }}">Дата</label>
-    <input
-        type="date"
-        id="{{ filterset.form.creation_date__date__gt.id }}"
-        name="{{ filterset.form.creation_date__date__gt.name }}"
-        value="{{ filterset.form.creation_date__date__gt.value }}"
-    >
-     -->
-
-    
-
-
-    <input type="submit" value="Найти" />
+    <input type="submit" value="{% trans 'Find' %}" />
 </form>
 {% endblock content %}

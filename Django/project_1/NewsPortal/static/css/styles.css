@@ -18,7 +18,32 @@ li {
 }
 
 * a:hover{
+<<<<<<< Updated upstream
     color: cornflowerblue;
+=======
+    color: #4B8BBE;
+}
+
+.account {
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.about-background{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    background: url("../images/background.png") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.account a {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+>>>>>>> Stashed changes
 }
 
 .active{
@@ -84,8 +109,7 @@ header nav{
     margin-right: 50px;
 }
 
-header ul{
-    width: 30%;
+header .header_nav__ul{
     display: flex;
     padding: 5px;
     justify-content: space-between;
@@ -105,10 +129,9 @@ header li{
 
 .container-content{
     width: 100%;
-    min-height: 1080px;
+    min-height: 817px;
     display: flex;
     align-items:center;
-    
     flex-direction: column;
 }
 

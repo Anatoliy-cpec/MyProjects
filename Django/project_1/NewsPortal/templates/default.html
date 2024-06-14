@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% load static %}
+{% load custom_tags %}
+{% load tz %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple app</title>
+    {% load custom_filters %}
+    {% load custom_tags %}
+<<<<<<< Updated upstream:Django/project_1/NewsPortal/templates/flatpages/default.html
+    {% load static %}
+=======
+    {% load cache %}
+>>>>>>> Stashed changes:Django/project_1/NewsPortal/templates/default.html
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+<body {% if current_time.hour >= 19 or current_time.hour <= 7 %} style="background-color: #4B8BBE" {% else %} style="background-color: #FFE873" {% endif %}>
+        <header class="wrapper">
+        <div class="container">
+            <nav class="header_nav"> 
+<<<<<<< Updated upstream:Django/project_1/NewsPortal/templates/flatpages/default.html
+                <a href="/home" style="min-width: 15px; min-height: 15px; text-align: center;"><img src="https://pythonz.net/media/img/events/thumbs/180x236/db5c67d4-1755-461e-951f-85c82f8d4607.jpeg" alt="Img" width="50px" height="50px"></a>
+                <ul>
+=======
+                <a href="{% url 'homepage' %}" style="min-width: 15px; min-height: 15px; text-align: center;"><img src="https://pythonz.net/media/img/events/thumbs/180x236/db5c67d4-1755-461e-951f-85c82f8d4607.jpeg" alt="Img" width="50px" height="50px"></a>
+                
+                <ul class="header_nav__ul">
+>>>>>>> Stashed changes:Django/project_1/NewsPortal/templates/default.html
+                    <li>
+                        {% url 'homepage' as url_home %}
+                        <a href="{% url 'homepage' %}" class="{% navactive request 'homepage' %}">{% trans 'Home' %}</a>
+                    </li>
+                    <li>
+                        {% url 'posts' as url_posts %}
+                        <a href="{% url  'posts' %}" class="{% navactive request 'posts' %}">{% trans 'Posts' %}</a>
+                    </li>
+                    <li>
+                        {% url 'search' as url_search %}
+                        <a href="{% url 'search' %}" class="{% navactive request 'search' %}">{% trans 'Search' %}</a>
+                    </li>
+                </ul>
+<<<<<<< Updated upstream:Django/project_1/NewsPortal/templates/flatpages/default.html
+=======
+                <div class="account">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'subscriptions' %}">{{ request.user.username }}</a>
+                        <img src="{% static 'images/user-profile_login.png' %}" alt="My image" width="25" height="25"/>
+                        <a href="http://127.0.0.1:8000/accounts/logout/">{% trans 'logout' %}</a>
+                    {% else %}
+                        <a href="http://127.0.0.1:8000/accounts/login/">{% trans 'login' %}</a>
+                        <img src="{% static 'images/user-profile_unlogin.png' %}" alt="img" width="25px" height="25px">
+                    {% endif %}
+                    
+                    
+                </div>
+>>>>>>> Stashed changes:Django/project_1/NewsPortal/templates/default.html
+            </nav>
+        </div>
+    </header>
+    <div class="content wrapper">
+        <div class="container">
+            <div class="container-content">
+                <div class="container-content_header">
+                    <h1>
+                        {% block title %}
+                            {{ flatpage.title }}
+                        {% endblock title %}
+                    </h1>
+                </div>
+                <div class="container-content_body">
+                    {% block content %}
+                        {{ flatpage.content }}
+                    {% endblock content %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if 'posts' in request.get_full_path  %}
+    <div class="pagination">
+        <span class="step-links">
+            
+                {% if page_obj.has_previous %}
+                    <a href="?{% url_replace page=1 %}">&laquo; {% trans 'first' %}</a>
+                    <a href="?{% url_replace page=page_obj.previous_page_number %}">{% trans 'previous' %}</a>
+                {% endif %}
+        
+                <span class="current">
+                    {% if page_obj.has_previous %}
+                        {{ page_obj.previous_page_number}}
+                    {% endif %}
+
+                    <<{{page_obj.number}}>>
+
+                    {% if page_obj.has_next %}
+                        {{ page_obj.next_page_number}}
+                    {% endif %}
+                </span>
+        
+                {% if page_obj.has_next %}
+                    <a href="?{% url_replace page=page_obj.next_page_number %}">{% trans 'next' %}</a>
+                    <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{% trans 'last'%} &raquo;</a>
+                {% endif %}
+        </span>
+    </div>
+    {% endif %}
+</body>
+<footer>
+
+</footer>
+</html>

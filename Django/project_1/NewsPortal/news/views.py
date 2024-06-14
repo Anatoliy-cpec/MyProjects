@@ -1,11 +1,31 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+
+from django.utils.translation import gettext as _ #  импортируем функцию для перевода
+
+from django.shortcuts import render
+from django.http import HttpResponse
+
 from django.views.generic import (
-    ListView, DetailView, CreateView, UpdateView, DeleteView,
+    ListView, DetailView, CreateView, UpdateView, DeleteView, View, TemplateView
 )
+
+from django.utils import timezone
+from django.shortcuts import redirect
+
+import pytz
+
 from .filters import PostSearchFilter
 from .forms import PostForm, PostArticleForm, PostNewsForm
+<<<<<<< Updated upstream
 from .models import *
+=======
+from .models import (
+    Post, Category
+)
+
+>>>>>>> Stashed changes
+
 
 class PostSearch(ListView):
     model = Post
@@ -37,12 +57,21 @@ class PostsList(ListView):
        return self.filterset.qs
 
     def get_context_data(self, **kwargs):
+<<<<<<< Updated upstream
        context = super().get_context_data(**kwargs)
        # Добавляем в контекст объект фильтрации.
        context['filterset'] = self.filterset
        return context
     
     
+=======
+        context = super().get_context_data(**kwargs)
+        # Добавляем в контекст объект фильтрации.
+        context['filterset'] = self.filterset        
+        return context
+    
+
+>>>>>>> Stashed changes
 
 class PostDetail(DetailView):
     model = Post
@@ -118,4 +147,9 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
 class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'post_delete.html'
+<<<<<<< Updated upstream
     success_url = reverse_lazy('posts')
+=======
+    success_url = reverse_lazy('posts')
+    
+>>>>>>> Stashed changes

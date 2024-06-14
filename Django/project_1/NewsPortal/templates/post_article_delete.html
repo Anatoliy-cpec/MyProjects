@@ -1,12 +1,13 @@
-{% extends 'flatpages/default.html' %}
+{% extends 'default.html' %}
+{% load i18n %}
 
 {% block content %}
-<h1>Удаление статьи</h1>
+<h1>{% trans 'Article delete' %}</h1>
 {% if post.choise == 'AR' %}
 <form action="" method="post" style="text-align: center;">
     {% csrf_token %}
-    <p>Удаляем "{{ post.post_header }}"?</p>
-    <input type="submit" value="Delete" />
+    <p>{% trans 'Delete' %} "{{ post.post_header }}"?</p>
+    <input type="submit" value="{% trans 'Delete' %}" />
 </form>
 {% else %}
     <h2>Это не статья!</h2>

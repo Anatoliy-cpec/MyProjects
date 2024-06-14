@@ -16,10 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import HomePage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('pages/', include('django.contrib.flatpages.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
     path("accounts/", include("allauth.urls")),
+<<<<<<< Updated upstream
+=======
+    path('', include('subscriptions.urls'), name='subscriptions'),
+>>>>>>> Stashed changes
     path('posts/', include('news.urls')),
+    path('', HomePage.as_view(), name='homepage'),
 ]

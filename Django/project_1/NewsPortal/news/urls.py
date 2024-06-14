@@ -1,7 +1,25 @@
 from django.urls import path
+<<<<<<< Updated upstream
 
 from .views import * 
 
+=======
+from .views import (
+    PostsList,
+    PostSearch,
+    PostDetail,
+    PostCreate,
+    PostUpdate,
+    PostDelete,
+    PostArticleCreate,
+    PostArticleUpdate,
+    PostArticleDelete,
+    PostNewsCreate,
+    PostNewsUpdate,
+    PostNewsDelete,
+
+)
+>>>>>>> Stashed changes
 
 
 urlpatterns = [
@@ -16,6 +34,12 @@ urlpatterns = [
    path('news/edit/<int:pk>/', PostNewsUpdate.as_view(), name='news_edit'),
    path('<int:pk>/delete/', PostDelete.as_view(), name='post_delete'),
    path('news/delete/<int:pk>/', PostNewsDelete.as_view(), name='news_delete'),
+<<<<<<< Updated upstream
    path('articles/delete/<int:pk>/', PostArticleDelete.as_view(), name='article_delete'),
    
 ]
+=======
+   path('articles/delete/<int:pk>/',
+        PostArticleDelete.as_view(), name='article_delete'),
+]
+>>>>>>> Stashed changes

@@ -1,11 +1,12 @@
-{% extends 'flatpages/default.html' %}
+{% extends 'default.html' %}
+{% load i18n %}
 
 {% block title %}
 
     {% if post.choise %}
-    <h1>Изменить новость</h1>
+    <h1>{% trans 'Edit news' %}</h1>
     {% else %}
-    <h1>Создать новость</h1>
+    <h1>{% trans 'Create news' %}</h1>
     {% endif %}
     
 {% endblock title %}
@@ -15,7 +16,7 @@
 <form action="" method="post" style="text-align: center;">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Save" />
+    <input type="submit" value="{% trans 'Save' %}" />
 </form>
 {% else %}
     <h2>Это не новость!</h2>
